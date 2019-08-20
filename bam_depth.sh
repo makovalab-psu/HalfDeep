@@ -77,3 +77,5 @@ samtools depth -Q 1 $out.sort.bam | gzip > $out.depth.dat.gz"
 samtools depth -Q 1 $out.sort.bam | gzip > $out.depth.dat.gz
 
 rm $out.bam
+rm $out.sort.bam
+rm $out.sort.bam.bai
