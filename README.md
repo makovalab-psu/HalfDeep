@@ -10,8 +10,8 @@ https://github.com/rsharris/genodsp
 .
 └── genomic_data
    ├── pacbio
-   │   ├── m54178_170623_204539.subreads.bam
-   │   ├── m54178_170624_064412.subreads.bam
+   │   ├── m54178_170623_204539.subreads.fastq.gz
+   │   ├── m54178_170624_064412.subreads.fastq.gz
    │   ├──  ...
    ├── assembly_curated
    │   ├── mBalMus1.pri.cur.20190618.fasta.gz

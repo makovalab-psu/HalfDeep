@@ -11,8 +11,10 @@ fi
 
 ref=$1
 ref=`echo $ref | sed 's/.fasta$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g'`
+refbase=`basename $ref`
 
-cpus=$SLURM_CPUS_PER_TASK
+cpus=3  # fix this!
+#cpus=$SLURM_CPUS_PER_TASK
 
 # Unless specified, use slurm array task id for input line num.
 if [ -z $2 ]; then
@@ -21,22 +23,22 @@ else
 	i=$2
 fi
 
-if [ ! -d $ref ]; then
-	mkdir $ref
-fi
-
 qry=`sed -n ${i}p input.fofn`
 
 out=`basename $qry`
-out=`echo $out | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g'`
-out=halfdeep/$ref/mapped_reads/$out
+out=`echo $out | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fastq.gz$//g'`
+out=halfdeep/$refbase/mapped_reads/$out
 
-if [ ! -d halfdeep/$ref ]; then
-	mkdir halfdeep/$ref
+if [ ! -d halfdeep ]; then
+	mkdir halfdeep
 fi
 
-if [ ! -d halfdeep/$ref/mapped_reads ]; then
-	mkdir halfdeep/$ref/mapped_reads
+if [ ! -d halfdeep/$refbase ]; then
+	mkdir halfdeep/$refbase
+fi
+
+if [ ! -d halfdeep/$refbase/mapped_reads ]; then
+	mkdir halfdeep/$refbase/mapped_reads
 fi
 
 
