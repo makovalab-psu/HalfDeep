@@ -12,10 +12,10 @@ longWindowSize=100K
 detectionThreshold=0.10
 gapFill=500K
 
-ref=$1
+refin=$1
+ref=$refin
 ref=`echo $ref | sed 's/.fasta$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g'`
 refbase=`basename $ref`
-refin=$1
 
 if [ ! -d halfdeep ]; then
 	echo "    halfdeep dir not found, has bam_depth not been run?"
@@ -27,14 +27,19 @@ if [ ! -d halfdeep/$refbase ]; then
 	exit -1
 fi
 
+if [ ! -d halfdeep/$refbase/mapped_reads ]; then
+	echo "    halfdeep/$refbase/mapped_reads dir not found, has bam_depth not been run?"
+	exit -1
+fi
+
 
 if [ -e halfdeep/$refbase/scaffold_lengths.dat ]; then
 	echo "halfdeep/$refbase/scaffold_lengths.dat found. Skip scaffold lengths step."
 else
 	echo "Collecting scaffold lengths from $refin"
 	echo "\
-    fasta_lengths $refin > halfdeep/$refbase/scaffold_lengths.dat"
-    fasta_lengths $refin > halfdeep/$refbase/scaffold_lengths.dat
+    scaffold_lengths $refin > halfdeep/$refbase/scaffold_lengths.dat"
+    scaffold_lengths $refin > halfdeep/$refbase/scaffold_lengths.dat
 fi
 
 
