@@ -38,8 +38,8 @@ if [ -e halfdeep/$refbase/scaffold_lengths.dat ]; then
 else
 	echo "Collecting scaffold lengths from $refin"
 	echo "\
-    scaffold_lengths $refin > halfdeep/$refbase/scaffold_lengths.dat"
-    scaffold_lengths $refin > halfdeep/$refbase/scaffold_lengths.dat
+    scaffold_lengths.py $refin > halfdeep/$refbase/scaffold_lengths.dat"
+    scaffold_lengths.py $refin > halfdeep/$refbase/scaffold_lengths.dat
 fi
 
 
@@ -48,6 +48,7 @@ if [ -e halfdeep/$refbase/depth.dat.gz ]; then
 else
 	echo "Combining individual reads-file depths to single track, in ${shortWindowSize} windows"
 
+	# not clear to me how to echo this long loop to the console
 	cat input.fofn \
 	  | while read readsname ; do
 	      readsname=`basename $readsname`
@@ -56,7 +57,6 @@ else
     gzip -dc halfdeep/$refbase/mapped_reads/$readsname.depth.dat.gz"
 		  done
 
-	# not clear to me how to echo this long command to the terminal
 	cat input.fofn \
 	  | while read readsname ; do
 	      readsname=`basename $readsname`
