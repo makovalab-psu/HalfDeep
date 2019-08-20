@@ -43,23 +43,29 @@ else
 fi
 
 
-echo "Combining individual reads-file depths to single track, in ${shortWindowSize} windows"
+if [ -e halfdeep/$refbase/depth.dat.gz ]; then
+	echo "halfdeep/$refbase/depth.dat.gz found. Skip depth-combining step."
+else
+	echo "Combining individual reads-file depths to single track, in ${shortWindowSize} windows"
 
-cat input.fofn \
-  | while read readsname ; do
-      readsname=`basename $readsname`
-      readsname=`echo $out | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fastq.gz$//g'`
-      gzip -dc $readsname.depth.dat.gz
-	  done \
-  | awk '{ print $1,$2,$2,$3 }' \
-  | genodsp --origin=one --uncovered:hide --precision=3 \
-	  --chromosomes=halfdeep/$refbase/scaffold_lengths.dat \
-	  = sum --window=$shortWindowSize --denom=actual \
-  | gzip \
-  > halfdeep/$refbase/depth.dat.gz
+	# not clear to me how to echo this long command to the terminal
+	cat input.fofn \
+	  | while read readsname ; do
+	      readsname=`basename $readsname`
+	      readsname=`echo $out | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fastq.gz$//g'`
+	      gzip -dc $readsname.depth.dat.gz
+		  done \
+	  | awk '{ print $1,$2,$2,$3 }' \
+	  | genodsp --origin=one --uncovered:hide --precision=3 \
+		  --chromosomes=halfdeep/$refbase/scaffold_lengths.dat \
+		  = sum --window=$shortWindowSize --denom=actual \
+	  | gzip \
+	  > halfdeep/$refbase/depth.dat.gz
+fi
 
 echo "Computing percentiles of depth distribution"
 
+rm -f halfdeep/$refbase/percentile_commands.sh
 gzip -dc halfdeep/$refbase/depth.dat.gz \
   | genodsp --origin=one --uncovered:hide --precision=3 --nooutput \
 	  --chromosomes=halfdeep/$refbase/scaffold_lengths.dat \
@@ -84,6 +90,7 @@ rm halfdeep/$refbase/temp.percentile_commands
 echo "Identifying half-deep intervals"
 
 source halfdeep/$refbase/percentile_commands.sh
+rm -f halfdeep/$refbase/halfdeep.dat
 gzip -dc halfdeep/$refbase/depth.dat.gz \
   | genodsp --origin=one --uncovered:hide --nooutputvalue \
 	  --chromosomes=halfdeep/$refbase/scaffold_lengths.dat \
