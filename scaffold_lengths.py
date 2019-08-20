@@ -21,7 +21,7 @@ def main():
 	for (name,sequence) in fasta_sequences(inFile):
 		print "%s\t%d" % (name,len(sequence))
 
-	if (inFilename != None): fclose(inFile)
+	if (inFilename != None): inFile.close()
 
 
 # fasta_sequences--
