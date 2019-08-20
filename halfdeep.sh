@@ -48,12 +48,20 @@ if [ -e halfdeep/$refbase/depth.dat.gz ]; then
 else
 	echo "Combining individual reads-file depths to single track, in ${shortWindowSize} windows"
 
+	cat input.fofn \
+	  | while read readsname ; do
+	      readsname=`basename $readsname`
+	      readsname=`echo $readsname | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fastq.gz$//g'`
+	echo "\
+    gzip -dc halfdeep/$refbase/mapped_reads/$readsname.depth.dat.gz"
+		  done
+
 	# not clear to me how to echo this long command to the terminal
 	cat input.fofn \
 	  | while read readsname ; do
 	      readsname=`basename $readsname`
-	      readsname=`echo $out | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fastq.gz$//g'`
-	      gzip -dc $readsname.depth.dat.gz
+	      readsname=`echo $readsname | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fastq.gz$//g'`
+	      gzip -dc halfdeep/$refbase/mapped_reads/$readsname.depth.dat.gz
 		  done \
 	  | awk '{ print $1,$2,$2,$3 }' \
 	  | genodsp --origin=one --uncovered:hide --precision=3 \
