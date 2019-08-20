@@ -104,7 +104,7 @@ read_depth <- function(depthFilename,scaffoldToOffset=NULL)
 	}
 
 
-read_half_deep <- function(halfDeepFilename,scaffoldToOffset=NULL)
+read_halfdeep <- function(halfDeepFilename,scaffoldToOffset=NULL)
 	#
 	# Read a file containing a list of genomic intervals. The intervals are
 	# origin-1 and closed.
@@ -173,19 +173,19 @@ read_percentiles <- function(percentilesFilename)
 	}
 
 
-half_deep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
-                           assemblyName="",
-                           scaffoldsToPlot=NULL,
-                           plotFilename=NULL,
-                           tickSpacing=10000000,
-                           width=17,height=7,pointsize=18,
-                           yLabelSpace=7)
+halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
+                          assemblyName="",
+                          scaffoldsToPlot=NULL,
+                          plotFilename=NULL,
+                          tickSpacing=10000000,
+                          width=17,height=7,pointsize=18,
+                          yLabelSpace=7)
 	#
 	# Plot half-deep intervals and depth along an assembly
 	#
 	# scaffolds:              As returned by read_scaffold_lengths().
 	# depth:                  As returned by read_depth()
-	# halfDeep:               As returned by read_half_deep()
+	# halfDeep:               As returned by read_halfdeep()
 	# percentileToValue:      As returned by read_percentiles()
 	# assemblyName:           Name of the assembly. This contributes to the
 	#                         plain title, and can contribute to the plot
@@ -252,10 +252,10 @@ half_deep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 	xlim = c(1,max(scaffoldTicks))
 	ylim = c(0,depthClip)
 
-	depthColor           = rgb(.6,.6,.6)
-	halfDepthColor       = "black"
-	halfDeepMarkerColor  = "red"
-	depthLimitsColor     = "blue"
+	depthColor          = rgb(.6,.6,.6)
+	halfDepthColor      = "black"
+	halfDeepMarkerColor = "red"
+	depthLimitsColor    = "blue"
 
 	guns = col2rgb(halfDeepMarkerColor) / 255
 	halfDeepOverlayColor = rgb(guns[1],guns[2],guns[3],alpha=.3)
@@ -283,7 +283,7 @@ half_deep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 					"\nmedian=",depth50Str,"   40%ile/2=",halfDepthLoStr,"   60%ile/2=",halfDepthHiStr,
 					sep=""),
 		 xaxt="n",xlab="",
-		 ylab=paste("aligned read depth in ",windowSize," windows (gray, clipped at ",depthClipStr,")",sep=""))
+		 ylab=paste("aligned read depth in 1K windows (gray, clipped at ",depthClipStr,")",sep=""))
 
 	# add horizontal axis
 
@@ -337,12 +337,12 @@ half_deep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 	if (turnDeviceOff) dev.off()
 	}
 
-half_deep_read_and_plot <- function(lengthsFilename,depthFilename,halfDeepFilename,
-                                    percentilesFilename,
-                                    plotFilenameTemplate=NULL,
-                                    tickSpacing=10000000,
-                                    width=17,height=7,pointsize=18,
-                                    yLabelSpace=7)
+halfdeep_read_and_plot <- function(lengthsFilename,depthFilename,halfDeepFilename,
+                                   percentilesFilename,
+                                   plotFilenameTemplate=NULL,
+                                   tickSpacing=10000000,
+                                   width=17,height=7,pointsize=18,
+                                   yLabelSpace=7)
 	#
 	# Plot half-deep intervals and depth, for several assemblies
 	#
@@ -350,12 +350,12 @@ half_deep_read_and_plot <- function(lengthsFilename,depthFilename,halfDeepFilena
 	scaffolds = read_scaffold_lengths(lengthsFilename)
 	scaffoldToOffset = linearized_scaffolds(scaffolds)
 	depth = read_depth(depthFilename,scaffoldToOffset)
-	halfDeep = read_half_deep(halfDeepFilename,scaffoldToOffset)
+	halfDeep = read_halfdeep(halfDeepFilename,scaffoldToOffset)
 	percentileToValue = read_percentiles(percentilesFilename)
 	
-	half_deep_plot(scaffolds,depth,halfDeep,percentileToValue,assembly,
-	               plotFilenameTemplate=plotFilenameTemplate,
-	               tickSpacing=tickSpacing,
-                   width=width,height=height,pointsize=pointsize,
-                   yLabelSpace=yLabelSpace)
+	halfdeep_plot(scaffolds,depth,halfDeep,percentileToValue,assembly,
+	              plotFilenameTemplate=plotFilenameTemplate,
+	              tickSpacing=tickSpacing,
+                  width=width,height=height,pointsize=pointsize,
+                  yLabelSpace=yLabelSpace)
 	}

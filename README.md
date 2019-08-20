@@ -3,14 +3,19 @@
 ## Dendencies
 
 minimap2
+
 samtools
-https://github.com/rsharris/genodsp
+
+genodsp (https://github.com/rsharris/genodsp)
 
 Those should all be installed an in your `$PATH`. Additionally, the scripts in
 this directory should be in your `$PATH`.
 
 
 ## Expected directory layout
+
+I've tried to set this all up to be similar to the VGP assembly pipeline, given
+the fArcCen1 Assembly Tutorial and the pipeline scripts for minimap2.
 
 Inputs are the assemblies and the fastq files.
 
@@ -59,3 +64,36 @@ bam_depth.sh assembly_curated/mBalMus1.pri.cur.20190618.fasta.gz 2
  ... (and so on, for 1..n where n is the number of fastq files)
 halfdeep.sh assembly_curated/mBalMus1.pri.cur.20190618.fasta.gz
 ```
+
+## Plotting
+
+Open R with the working directory at, e.g.
+genomic_data/halfdeep/mBalMus1.pri.cur.20190618.
+
+Then, in R:
+```
+source("path_to_halfdeep/halfdeep.r")
+scaffolds         = read_scaffold_lengths("scaffold_lengths.dat")
+scaffoldToOffset  = linearized_scaffolds(scaffolds)
+depth             = read_depth("depth.dat.gz",scaffoldToOffset)
+halfDeep          = read_halfdeep("halfdeep.dat",scaffoldToOffset)
+percentileToValue = read_percentiles("percentile_commands.sh")
+```
+
+To plot to the screen:
+```
+halfdeep_plot(scaffolds,depth,halfDeep,percentileToValue,assembly)
+```
+
+To plot to a file (currently only supports pdf):
+```
+halfdeep_plot(scaffolds,depth,halfDeep,percentileToValue,assembly,plotFilename="half_deep.dat.pdf")
+```
+
+To plot just a few scaffolds:
+```
+scaffoldsToPlot=c("Super_scaffold_8","Super_scaffold_17")
+halfdeep_plot(scaffolds,depth,halfDeep,percentileToValue,assembly,scaffoldsToPlot=scaffoldsToPlot)
+```
+
+
