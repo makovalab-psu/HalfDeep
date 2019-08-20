@@ -25,15 +25,19 @@ if [ ! -d $ref ]; then
 	mkdir $ref
 fi
 
-if [ ! -d $ref/mapped_reads ]; then
-	mkdir $ref/mapped_reads
-fi
-
 qry=`sed -n ${i}p input.fofn`
 
 out=`basename $qry`
 out=`echo $out | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g'`
-out=$ref/half_deep/mapped_reads/$out
+out=$ref/halfdeep/mapped_reads/$out
+
+if [ ! -d $ref/halfdeep ]; then
+	mkdir $ref/halfdeep
+fi
+
+if [ ! -d $ref/halfdeep/mapped_reads ]; then
+	mkdir $ref/halfdeep/mapped_reads
+fi
 
 
 if [ -e $out.depth.dat.gz ]; then

@@ -80,5 +80,5 @@ gzip -dc $ref/depth.dat.gz \
 	  = binarize \
 	  = dilate --right=$longWindowSize-1 \
 	  = close $gapFill \
-  > $ref/half_deep.dat
+  > $ref/halfdeep.dat
 
