@@ -1,3 +1,9 @@
+# expected symlinks  #
+######################
 bam_depth
 halfdeep
 scaffold_lengths
+
+# OS generated files #
+######################
+.DS_Store
