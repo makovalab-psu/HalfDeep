@@ -29,14 +29,14 @@ qry=`sed -n ${i}p input.fofn`
 
 out=`basename $qry`
 out=`echo $out | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g'`
-out=$ref/halfdeep/mapped_reads/$out
+out=halfdeep/$ref/mapped_reads/$out
 
-if [ ! -d $ref/halfdeep ]; then
-	mkdir $ref/halfdeep
+if [ ! -d halfdeep/$ref ]; then
+	mkdir halfdeep/$ref
 fi
 
-if [ ! -d $ref/halfdeep/mapped_reads ]; then
-	mkdir $ref/halfdeep/mapped_reads
+if [ ! -d halfdeep/$ref/mapped_reads ]; then
+	mkdir halfdeep/$ref/mapped_reads
 fi
 
 
