@@ -33,7 +33,7 @@ qry=`sed -n ${i}p input.fofn`
 
 out=`basename $qry`
 out=`echo $out | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g'`
-out=$ref/mapped_reads/$out
+out=$ref/half_deep/mapped_reads/$out
 
 
 if [ -e $out.depth.dat.gz ]; then
