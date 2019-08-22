@@ -184,8 +184,9 @@ halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 	# Plot half-deep intervals and depth along an assembly
 	#
 	# scaffolds:              As returned by read_scaffold_lengths().
-	# depth:                  As returned by read_depth()
-	# halfDeep:               As returned by read_halfdeep()
+	# depth:                  As returned by read_depth().
+	# halfDeep:               As returned by read_halfdeep(). If this is NULL,
+	#                         no half-deep information is displayed.
 	# percentileToValue:      As returned by read_percentiles()
 	# assemblyName:           Name of the assembly. This contributes to the
 	#                         plain title, and can contribute to the plot
@@ -207,6 +208,8 @@ halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 	{
 	# if we have a scaffold subset, reduce our copy of the data to that subset
 
+	showHalfDeep = !is.null(halfDeep)
+
 	if (!is.null(scaffoldsToPlot))
 		{
 		# validate the names in the subset
@@ -227,9 +230,13 @@ halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 		depth = depth[depth$scaffold %in% names(scaffoldToOffset),]
 		depth[,"s"] = scaffoldToOffset[depth$scaffold] + depth$start
 		depth[,"e"] = scaffoldToOffset[depth$scaffold] + depth$end
-		halfDeep = halfDeep[halfDeep$scaffold %in% names(scaffoldToOffset),]
-		halfDeep[,"s"] = scaffoldToOffset[halfDeep$scaffold] + halfDeep$start
-		halfDeep[,"e"] = scaffoldToOffset[halfDeep$scaffold] + halfDeep$end
+
+		if (showHalfDeep)
+			{
+			halfDeep = halfDeep[halfDeep$scaffold %in% names(scaffoldToOffset),]
+			halfDeep[,"s"] = scaffoldToOffset[halfDeep$scaffold] + halfDeep$start
+			halfDeep[,"e"] = scaffoldToOffset[halfDeep$scaffold] + halfDeep$end
+			}
 		}
 
 	# fetch percentile values (used only for drawing an labeling)
@@ -252,7 +259,7 @@ halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 	xlim = c(1,max(scaffoldTicks))
 	ylim = c(0,depthClip)
 
-	depthColor          = rgb(.6,.6,.6)
+	depthColor          = if (showHalfDeep) rgb(.6,.6,.6) else "black"
 	halfDepthColor      = "black"
 	halfDeepMarkerColor = "red"
 	depthLimitsColor    = "blue"
@@ -276,19 +283,32 @@ halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 
 	# create empty plot
 
+	if (showHalfDeep)
+		{
+		title = paste("half-deep intervals (red overlay) in ",assemblyName,
+		              "\nmedian=",depth50Str,
+		              "   40%ile/2=",halfDepthLoStr,
+		              "   60%ile/2=",halfDepthHiStr,
+		              sep="")
+		ylab  = paste("aligned read depth in 1Kbp windows (gray, clipped at ",depthClipStr,")",sep="")
+		}
+	else
+		{
+		title = paste("coverage depth in ",assemblyName,"\nmedian=",depth50Str,sep="")
+		ylab  = paste("aligned read depth in 1Kbp windows (clipped at ",depthClipStr,")",sep="")
+		}
+
 	par(mar=c(yLabelSpace,4,2.5,0.2)+0.1)     # BLTR
 	options(scipen=10)
-	plot(NA,xlim=xlim,ylim=ylim,
-		 main=paste("half-deep intervals (red overlay) in ",assemblyName,
-					"\nmedian=",depth50Str,"   40%ile/2=",halfDepthLoStr,"   60%ile/2=",halfDepthHiStr,
-					sep=""),
-		 xaxt="n",xlab="",
-		 ylab=paste("aligned read depth in 1K windows (gray, clipped at ",depthClipStr,")",sep=""))
+	plot(NA,xlim=xlim,ylim=ylim,main=title,xaxt="n",xlab="",ylab=ylab)
 
 	# add horizontal axis
 
-	axis(1,at=halfDeepCenters,labels=F,line=-0.5,col=halfDeepMarkerColor)                        # interval markers
-	axis(1,at=c(-0.2*max(scaffoldTicks),1.2*max(scaffoldTicks)),labels=F,line=-0.5,col="white")  # erase unwanted horizonal 'axis'
+	if ((showHalfDeep) && (nrow(halfDeep) > 0))
+		{
+		axis(1,at=halfDeepCenters,labels=F,line=-0.5,col=halfDeepMarkerColor)                        # interval markers
+		axis(1,at=c(-0.2*max(scaffoldTicks),1.2*max(scaffoldTicks)),labels=F,line=-0.5,col="white")  # erase unwanted horizonal 'axis'
+		}
 
 	if ((tickSpacing > 0) & (xlim[2]>=tickSpacing))          # equal-spaced ticks
 		axis(1,at=seq(tickSpacing,xlim[2],by=tickSpacing),labels=F,col="gray")
@@ -300,37 +320,49 @@ halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 
 	points(depth$s,depth$depth,col=depthColor,pch=19,cex=0.3)
 
-	halfsies = (depth$depth>=halfDepthLo) & (depth$depth<=halfDepthHi)
-	points(depth$s[halfsies],depth$depth[halfsies],col=halfDepthColor,pch=19,cex=0.1)
+	if (showHalfDeep)
+		{
+		halfsies = (depth$depth>=halfDepthLo) & (depth$depth<=halfDepthHi)
+		points(depth$s[halfsies],depth$depth[halfsies],col=halfDepthColor,pch=19,cex=0.1)
+		}
 
 	# draw half-deep intervals as red overlay rectangles; note that R often
 	# does a poor job at filling narrow rectangles, so we also draw each
 	# rectangle as a centered line; and, because the depth plot will overshoot
 	# the upper limit, we multiply that limit by 1.2 here
 
-	rect(halfDeep$s,ylim[1],halfDeep$e,ylim[2]*1.2,border=NA,col=halfDeepOverlayColor)  # LBRT
+	if ((showHalfDeep) && (nrow(halfDeep) > 0))
+		{
+		rect(halfDeep$s,ylim[1],halfDeep$e,ylim[2]*1.2,border=NA,col=halfDeepOverlayColor)  # LBRT
 
-	halfDeepCentersX = matrix(nrow=3,ncol=length(halfDeepCenters))
-	halfDeepCentersX[1,] = halfDeepCenters
-	halfDeepCentersX[2,] = halfDeepCenters
-	halfDeepCentersX[3,] = NA
-	dim(halfDeepCentersX) = NULL
-	halfDeepCentersY = matrix(nrow=3,ncol=length(halfDeepCenters))
-	halfDeepCentersY[1,] = ylim[1]
-	halfDeepCentersY[2,] = ylim[2]*1.2
-	halfDeepCentersY[3,] = NA
-	dim(halfDeepCentersY) = NULL
-	lines(halfDeepCentersX,halfDeepCentersY,col=halfDeepOverlayColor)
+		halfDeepCentersX = matrix(nrow=3,ncol=length(halfDeepCenters))
+		halfDeepCentersX[1,] = halfDeepCenters
+		halfDeepCentersX[2,] = halfDeepCenters
+		halfDeepCentersX[3,] = NA
+		dim(halfDeepCentersX) = NULL
+		halfDeepCentersY = matrix(nrow=3,ncol=length(halfDeepCenters))
+		halfDeepCentersY[1,] = ylim[1]
+		halfDeepCentersY[2,] = ylim[2]*1.2
+		halfDeepCentersY[3,] = NA
+		dim(halfDeepCentersY) = NULL
+		lines(halfDeepCentersX,halfDeepCentersY,col=halfDeepOverlayColor)
+		}
 
 	# add horizontal lines to show median and half-deep limits
 
 	lines(xlim,c(depth50,depth50),col=depthLimitsColor,lwd=2,lty=2)
-	lines(xlim,c(halfDepthHi,halfDepthHi),col=depthLimitsColor,lwd=2,lty=2)
-	lines(xlim,c(halfDepthLo,halfDepthLo),col=depthLimitsColor,lwd=2,lty=2)
+	if (showHalfDeep)
+		{
+		lines(xlim,c(halfDepthHi,halfDepthHi),col=depthLimitsColor,lwd=2,lty=2)
+		lines(xlim,c(halfDepthLo,halfDepthLo),col=depthLimitsColor,lwd=2,lty=2)
+		}
 
-	text(0,depth50,    "median ",   adj=1,cex=0.7,col=depthLimitsColor)
-	text(0,halfDepthLo,"half-40th ",adj=1,cex=0.7,col=depthLimitsColor)
-	text(0,halfDepthHi,"half-60th ",adj=1,cex=0.7,col=depthLimitsColor)
+	text(0,depth50,"median ",adj=1,cex=0.7,col=depthLimitsColor)
+	if (showHalfDeep)
+		{
+		text(0,halfDepthLo,"half-40th ",adj=1,cex=0.7,col=depthLimitsColor)
+		text(0,halfDepthHi,"half-60th ",adj=1,cex=0.7,col=depthLimitsColor)
+		}
 
 	# close the plot
 
