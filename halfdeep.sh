@@ -57,6 +57,8 @@ else
     gzip -dc halfdeep/$refbase/mapped_reads/$readsname.depth.dat.gz"
 		  done
 
+	# nota bene: the awk command converts samtools' scaffold,position,depth to
+	#            scaffold,start,end,depth that genodsp wants
 	cat input.fofn \
 	  | while read readsname ; do
 	      readsname=`basename $readsname`
