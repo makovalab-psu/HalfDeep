@@ -1,6 +1,6 @@
 # HalfDeep
 
-## Dendencies
+## Dependencies
 
 minimap2
 
