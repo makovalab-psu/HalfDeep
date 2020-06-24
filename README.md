@@ -31,7 +31,7 @@ the fArcCen1 Assembly Tutorial and the pipeline scripts for minimap2.
 Inputs are the assemblies and the fastq files.
 
 The final output is a halfdeep.dat file. This is a list of
-<scaffold> <start> <end> intervals (origin 1, closed) that the process has\
+<scaffold> <start> <end> intervals (origin 1, closed) that the process has
 called as 'covered at half depth'.
 
 ```
