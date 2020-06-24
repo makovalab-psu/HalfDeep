@@ -38,7 +38,7 @@ called as 'covered at half depth'.
 .
 └── genomic_data
    ├── pacbio
-   │   ├── m54178_170623_204539.subreads.fastq.gz
+   │   ├── `#FF0000` m54178_170623_204539.subreads.fastq.gz
    │   ├── m54178_170624_064412.subreads.fastq.gz
    │   ├──  ...
    ├── assembly_curated
