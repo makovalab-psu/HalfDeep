@@ -28,7 +28,8 @@ export PATH=path_to_halfdeep:${PATH}
 I've tried to set this all up to be similar to the VGP assembly pipeline, given
 the fArcCen1 Assembly Tutorial and the pipeline scripts for minimap2.
 
-Inputs are the assemblies and the fastq files.
+Inputs are the assemblies and the fastq files (*.fasta.gz and *.fastq.gz in the
+directory layout shown below).
 
 The final output is a halfdeep.dat file. This is a list of
 <scaffold> <start> <end> intervals (origin 1, closed) that the process has
