@@ -8,7 +8,7 @@ samtools
 
 genodsp (https://github.com/rsharris/genodsp)
 
-Those must all be installed an in your `$PATH`.
+Those must all be installed and in your `$PATH`.
 
 ## Installation
 
@@ -18,7 +18,7 @@ git clone https://github.com/makovalab-psu/halfdeep
 ```
 
 The .sh and .py scripts in the halfdeep directory must be in your `$PATH`. One
-way to accomplish that is to add this to your bash startup file:
+way to accomplish that is to add this to your shell startup file (e.g. .bashrc):
 ```
 export PATH=path_to_halfdeep:${PATH}
 ```
