@@ -29,7 +29,8 @@ I've tried to set this all up to be similar to the VGP assembly pipeline, given
 the fArcCen1 Assembly Tutorial and the pipeline scripts for minimap2.
 
 Inputs are the assemblies and the fastq files (*.fasta.gz and *.fastq.gz in the
-directory layout shown below).
+directory layout shown below). The assembly should have one of these file
+extensions: .fa, .fasta, .fsa_nt, .fa.gz, .fasta.gz, or .fsa_nt.gz.
 
 The final output is a halfdeep.dat file. This is a list of
 <scaffold> <start> <end> intervals (origin 1, closed) that the process has
