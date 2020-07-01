@@ -72,6 +72,10 @@ called as 'covered at half depth'.
 ## Running
 
 ```
+cd genomic_data/assembly_curated
+minimap2 -x map-pb -d mBalMus1.pri.cur.20190618.idx mBalMus1.pri.cur.20190618.fasta.gz
+ ... (and so on, for each assembly)
+
 cd genomic_data
 ls pacbio/*.fastq.gz > input.fofn
 bam_depth.sh assembly_curated/mBalMus1.pri.cur.20190618.fasta.gz 1
