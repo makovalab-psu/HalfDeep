@@ -10,7 +10,7 @@ fi
 #module load samtools
 
 ref=$1
-ref=`echo $ref | sed 's/.fasta$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g'`
+ref=`echo $ref | sed 's/.fasta$//g' | sed 's/.fa$//g' | sed 's/.fsa_nt$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fsa_nt.gz$//g'`
 refbase=`basename $ref`
 
 cpus=3  # fix this!
