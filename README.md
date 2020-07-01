@@ -38,6 +38,7 @@ called as 'covered at half depth'.
 ```
 .
 └── genomic_data
+   │ input.fofn
    ├── pacbio
    │   ├── m54178_170623_204539.subreads.fastq.gz
    │   ├── m54178_170624_064412.subreads.fastq.gz
@@ -71,11 +72,15 @@ called as 'covered at half depth'.
 
 ```
 cd genomic_data
+ls pacbio/*.fastq.gz > input.fofn
 bam_depth.sh assembly_curated/mBalMus1.pri.cur.20190618.fasta.gz 1
 bam_depth.sh assembly_curated/mBalMus1.pri.cur.20190618.fasta.gz 2
  ... (and so on, for 1..n where n is the number of fastq files)
 halfdeep.sh assembly_curated/mBalMus1.pri.cur.20190618.fasta.gz
 ```
+
+Bam_depth determines which fastq file by reading line i of input.fofn, where i
+is the number given on the command line.
 
 ## Plotting
 
