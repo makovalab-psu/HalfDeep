@@ -17,6 +17,11 @@ ref=$refin
 ref=`echo $ref | sed 's/.fasta$//g' | sed 's/.fa$//g' | sed 's/.fsa_nt$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fsa_nt.gz$//g'`
 refbase=`basename $ref`
 
+if [ ! -e input.fofn ]; then
+	echo "input.fofn does not exist. Exit."
+	exit -1
+fi
+
 if [ ! -d halfdeep ]; then
 	echo "    halfdeep dir not found, has bam_depth not been run?"
 	exit -1
@@ -40,6 +45,11 @@ else
 	echo "\
     scaffold_lengths.py $refin > halfdeep/$refbase/scaffold_lengths.dat"
     scaffold_lengths.py $refin > halfdeep/$refbase/scaffold_lengths.dat
+fi
+
+if [ ! -e halfdeep/$refbase/scaffold_lengths.dat ]; then
+	echo "Something went wrong with scaffold_lengths. halfdeep/$refbase/scaffold_lengths.dat does not exist. Exit."
+	exit -1
 fi
 
 
@@ -73,6 +83,12 @@ else
 	  > halfdeep/$refbase/depth.dat.gz
 fi
 
+if [ ! -e halfdeep/$refbase/depth.dat.gz ]; then
+	echo "Something went wrong with genodsp. halfdeep/$refbase/depth.dat.gz does not exist. Exit."
+	exit -1
+fi
+
+
 echo "Computing percentiles of depth distribution"
 
 rm -f halfdeep/$refbase/percentile_commands.sh
@@ -81,6 +97,11 @@ gzip -dc halfdeep/$refbase/depth.dat.gz \
 	  --chromosomes=halfdeep/$refbase/scaffold_lengths.dat \
 	  = percentile 40..60by10 --min=1/inf --report:bash \
   > halfdeep/$refbase/temp.percentile_commands
+
+if [ ! -e halfdeep/$refbase/temp.percentile_commands ]; then
+	echo "Something went wrong with genodsp. halfdeep/$refbase/temp.percentile_commands does not exist. Exit."
+	exit -1
+fi
 
 cat halfdeep/$refbase/temp.percentile_commands \
   | grep "# bash command" \
@@ -94,6 +115,11 @@ cat halfdeep/$refbase/temp.percentile_commands \
   | awk '{ print "export","half"$1"="($2/2) }' \
   | sed "s/halfpercentile/halfPercentile/" \
   >> halfdeep/$refbase/percentile_commands.sh
+
+if [ ! -e halfdeep/$refbase/percentile_commands.sh ]; then
+	echo "Something went wrong. halfdeep/$refbase/percentile_commands.sh does not exist. Exit."
+	exit -1
+fi
 
 rm halfdeep/$refbase/temp.percentile_commands
 
@@ -114,3 +140,7 @@ gzip -dc halfdeep/$refbase/depth.dat.gz \
 	  = close $gapFill \
   > halfdeep/$refbase/halfdeep.dat
 
+if [ ! -e halfdeep/$refbase/halfdeep.dat ]; then
+	echo "Something went wrong with genodsp. halfdeep/$refbase/halfdeep.dat does not exist. Exit."
+	exit -1
+fi

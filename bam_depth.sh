@@ -23,6 +23,16 @@ else
 	i=$2
 fi
 
+if [ ! -e $ref ]; then
+	echo "$ref does not exist. Exit."
+	exit -1
+fi
+
+if [ ! -e input.fofn ]; then
+	echo "input.fofn does not exist. Exit."
+	exit -1
+fi
+
 qry=`sed -n ${i}p input.fofn`
 
 out=`basename $qry`
@@ -57,6 +67,10 @@ else
 	minimap2 -x map-pb -a -t $cpus $ref.idx $qry | samtools view -hb - > $out.bam
 fi
 
+if [ ! -e $out.bam ]; then
+	echo "Something went wrong with minimap2. Intermediate file $out.bam does not exist. Exit."
+	exit -1
+fi
 
 if [ -e $out.sort.bam ]; then
 	echo "$out.sort.bam found. Skip sort."
@@ -69,12 +83,21 @@ else
 	samtools index $out.sort.bam
 fi
 
+if [ ! -e $out.sort.bam ]; then
+	echo "Something went wrong with samtools sort. Intermediate file $out.sort.bam does not exist. Exit."
+	exit -1
+fi
 
 echo "Compute coverage depth for $out.bam"
 
 echo "\
 samtools depth -Q 1 $out.sort.bam | gzip > $out.depth.dat.gz"
 samtools depth -Q 1 $out.sort.bam | gzip > $out.depth.dat.gz
+
+if [ ! -e $out.depth.dat.gz ]; then
+	echo "Something went wrong with samtools depth. $out.depth.dat.gz does not exist. Exit."
+	exit -1
+fi
 
 rm $out.bam
 rm $out.sort.bam
