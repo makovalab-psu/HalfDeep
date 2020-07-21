@@ -100,6 +100,8 @@ scaffoldToOffset  = linearized_scaffolds(scaffolds)
 depth             = read_depth("depth.dat.gz",scaffoldToOffset)
 halfDeep          = read_halfdeep("halfdeep.dat",scaffoldToOffset)
 percentileToValue = read_percentiles("percentile_commands.sh")
+
+assembly = "assembly name"  # e.g. mBalMus1.pri.cur.20190618
 ```
 
 To plot to the screen:
