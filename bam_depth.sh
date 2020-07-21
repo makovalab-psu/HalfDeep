@@ -24,7 +24,7 @@ else
 fi
 
 if [ ! -e $ref ]; then
-	echo "$ref does not exist. Exit."
+	echo "reference $ref does not exist. Exit."
 	exit -1
 fi
 
