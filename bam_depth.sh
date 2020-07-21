@@ -10,6 +10,11 @@ fi
 #module load samtools
 
 ref=$1
+if [ ! -e $ref ]; then
+	echo "reference $ref does not exist. Exit."
+	exit -1
+fi
+
 ref=`echo $ref | sed 's/.fasta$//g' | sed 's/.fa$//g' | sed 's/.fsa_nt$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fsa_nt.gz$//g'`
 refbase=`basename $ref`
 
@@ -23,8 +28,8 @@ else
 	i=$2
 fi
 
-if [ ! -e $ref ]; then
-	echo "reference $ref does not exist. Exit."
+if [ ! -e $ref.idx ]; then
+	echo "reference index $ref.idx does not exist. Exit."
 	exit -1
 fi
 
