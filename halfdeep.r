@@ -179,7 +179,8 @@ halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
                           plotFilename=NULL,
                           tickSpacing=10000000,
                           width=17,height=7,pointsize=18,
-                          yLabelSpace=7)
+                          yLabelSpace=7,
+                          maxDepth=NA)
 	#
 	# Plot half-deep intervals and depth along an assembly
 	#
@@ -204,6 +205,9 @@ halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 	#                         creates the plot window.
 	# yLabelSpace:            Space below the plot. This can be increased to
 	#                         accommodate longer scaffold names.
+	# maxDepth:               Depth greater than this is not shown in the plot;
+	#                         i.e. the vertical axis stops at this value. By
+	#                         default this is 1.5*median depth.
 	#
 	{
 	# if we have a scaffold subset, reduce our copy of the data to that subset
@@ -244,7 +248,7 @@ halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 	depth50        = percentileToValue["percentile50"]
 	halfDepthLo    = percentileToValue["halfPercentile40"]
 	halfDepthHi    = percentileToValue["halfPercentile60"]
-	depthClip      = 1.5*depth50
+	depthClip      = ifelse(is.na(maxDepth),1.5*depth50,maxDepth)
 	depth50Str     = sprintf("%.1f",depth50)
 	halfDepthLoStr = sprintf("%.1f",halfDepthLo)
 	halfDepthHiStr = sprintf("%.1f",halfDepthHi)
