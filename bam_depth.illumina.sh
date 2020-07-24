@@ -33,8 +33,8 @@ if [ ! -e $ref.fa ]; then
 	exit -1
 fi
 
-if [ ! -e $ref.bwt ]; then
-	echo "reference index $ref.bwt does not exist. Exit."
+if [ ! -e $ref.fa.bwt ]; then
+	echo "reference index $ref.fa.bwt does not exist. Exit."
 	exit -1
 fi
 
