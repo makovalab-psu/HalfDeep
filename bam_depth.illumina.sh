@@ -2,7 +2,7 @@
 
 if [ -z $1 ]; then
 	echo "Usage: ./bam_depth <ref>"
-	echo "    Assumes we have <ref> and <info.illumina.fofn> in the same dir"
+	echo "    Assumes we have <ref> and <input.illumina.fofn> in the same dir"
 	exit -1
 fi
 
@@ -38,12 +38,12 @@ if [ ! -e $ref.fa.bwt ]; then
 	exit -1
 fi
 
-if [ ! -e info.illumina.fofn ]; then
-	echo "info.illumina.fofn does not exist. Exit."
+if [ ! -e input.illumina.fofn ]; then
+	echo "input.illumina.fofn does not exist. Exit."
 	exit -1
 fi
 
-qry=`sed -n ${i}p info.illumina.fofn`
+qry=`sed -n ${i}p input.illumina.fofn`
 
 out=`basename $qry`
 out=`echo $out | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fastq.gz$//g'`
