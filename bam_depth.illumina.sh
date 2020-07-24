@@ -28,8 +28,13 @@ else
 	i=$2
 fi
 
-if [ ! -e $ref.idx ]; then
-	echo "reference index $ref.idx does not exist. Exit."
+if [ ! -e $ref.fa ]; then
+	echo "reference index $ref.fa does not exist. Exit."
+	exit -1
+fi
+
+if [ ! -e $ref.bwt ]; then
+	echo "reference index $ref.bwt does not exist. Exit."
 	exit -1
 fi
 
