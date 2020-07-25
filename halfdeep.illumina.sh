@@ -60,6 +60,7 @@ else
 
 	# not clear to me how to echo this long loop to the console
 	cat input.illumina.fofn \
+	  | awk '{ print $1 }' \
 	  | while read readsname ; do
 	      readsname=`basename $readsname`
 	      readsname=`echo $readsname | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fastq.gz$//g'`
@@ -70,6 +71,7 @@ else
 	# nota bene: the awk command converts samtools' scaffold,position,depth to
 	#            scaffold,start,end,depth that genodsp wants
 	cat input.illumina.fofn \
+	  | awk '{ print $1 }' \
 	  | while read readsname ; do
 	      readsname=`basename $readsname`
 	      readsname=`echo $readsname | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fastq.gz$//g'`

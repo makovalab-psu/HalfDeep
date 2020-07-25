@@ -44,8 +44,15 @@ if [ ! -e input.illumina.fofn ]; then
 fi
 
 qry=`sed -n ${i}p input.illumina.fofn`
+numQry=`echo ${qry} | awk '{ print NF }'`
 
-out=`basename $qry`
+if [ "$numQry" -eq 1 ]
+	out=`basename $qry`
+else
+	qry1=`echo ${qry} | awk '{ print $1 }'`
+	out=`basename $qry1`
+fi
+
 out=`echo $out | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fastq.gz$//g'`
 out=halfdeep/$refbase/mapped_reads/$out
 
