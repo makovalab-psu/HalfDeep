@@ -46,7 +46,7 @@ fi
 qry=`sed -n ${i}p input.illumina.fofn`
 numQry=`echo ${qry} | awk '{ print NF }'`
 
-if [ "$numQry" -eq 1 ]
+if [ "$numQry" -eq 1 ]; then
 	out=`basename $qry`
 else
 	qry1=`echo ${qry} | awk '{ print $1 }'`
