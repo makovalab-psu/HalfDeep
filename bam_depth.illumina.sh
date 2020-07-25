@@ -73,8 +73,8 @@ else
 	echo "Start aligning $qry to $ref.idx"
 
 	echo "\
-	bwa mem -t $cpus $ref $qry | samtools view -hb - > $out.bam"
-	bwa mem -t $cpus $ref $qry | samtools view -hb - > $out.bam
+	bwa mem -t $cpus $ref.fa $qry | samtools view -hb - > $out.bam"
+	bwa mem -t $cpus $ref.fa $qry | samtools view -hb - > $out.bam
 fi
 
 if [ ! -e $out.bam ]; then
@@ -109,6 +109,6 @@ if [ ! -e $out.depth.dat.gz ]; then
 	exit -1
 fi
 
-rm $out.bam
+#rm $out.bam
 #rm $out.sort.bam
 #rm $out.sort.bam.bai
