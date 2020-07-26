@@ -13,7 +13,7 @@ def main():
 	(inFilename,inFile) = (None,stdin)
 	if (len(argv) == 2):
 		inFilename = argv[1]
-		if (inFilename.endswith(".gz")) or (filename.endswith(".gzip")):
+		if (inFilename.endswith(".gz")) or (inFilename.endswith(".gzip")):
 			inFile = gzip_open(inFilename,"rt")
 		else:
 			inFile = file(inFilename,"rt")
