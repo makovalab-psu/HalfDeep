@@ -180,7 +180,8 @@ halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
                           tickSpacing=10000000,
                           width=17,height=7,pointsize=18,
                           yLabelSpace=7,
-                          maxDepth=NA)
+                          maxDepth=NA,
+                          scaffoldInterval=NULL)
 	#
 	# Plot half-deep intervals and depth along an assembly
 	#
@@ -208,9 +209,16 @@ halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 	# maxDepth:               Depth greater than this is not shown in the plot;
 	#                         i.e. the vertical axis stops at this value. By
 	#                         default this is 1.5*median depth.
+	# scaffoldInterval        subinterval to restrict the plot to. Typically
+	#                         this would only be used when only one scaffold
+	#                         is to be plotted. This is a (start,end) pair,
+	#                         origin-zero, half-open.
 	#
 	{
 	# if we have a scaffold subset, reduce our copy of the data to that subset
+
+	if (!is.null(scaffoldInterval))
+		stop("scaffoldInterval is not implemented yet")
 
 	showHalfDeep = !is.null(halfDeep)
 
@@ -243,7 +251,7 @@ halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 			}
 		}
 
-	# fetch percentile values (used only for drawing an labeling)
+	# fetch percentile values (used only for drawing and labeling)
 
 	depth50        = percentileToValue["percentile50"]
 	halfDepthLo    = percentileToValue["halfPercentile40"]
@@ -372,6 +380,7 @@ halfdeep_plot <- function(scaffolds,depth,halfDeep,percentileToValue,
 
 	if (turnDeviceOff) dev.off()
 	}
+
 
 halfdeep_read_and_plot <- function(lengthsFilename,depthFilename,halfDeepFilename,
                                    percentilesFilename,
