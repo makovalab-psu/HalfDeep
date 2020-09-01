@@ -10,7 +10,7 @@ _TBD_
 The fake genome consists of three scaffolds -- FAKE1, FAKE2, and FAKE3.
 
 Read is roughly 15X. The ground truth of the reads is that FAKE2 and FAKE3
-are covered at full depth. FAKE1 is mostly covered at hald depth, but the
+are covered at full depth. FAKE1 is mostly covered at half depth, but the
 interval (120137,167385) is full depth. This mimics a common assembly error
 for heterogametic individuals, where the two sex chromosomes have been
 misassembled into a single scaffold, with the PAR between them.
