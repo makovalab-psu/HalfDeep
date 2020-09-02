@@ -235,7 +235,6 @@ This has created the file half_deep.dat.pdf.
    │   │   ├── percentile_commands.sh
    │   │   ├── halfdeep.dat
    │   │   ├── >>> half_deep.dat.pdf <<<
-&#x21E8;
 ```
 
 The plot is shown below. The horizontal axis is positions along the assembly.
@@ -260,6 +259,3 @@ intervals in red. For this dataset it has incorrectly called all of the FAKE1
 scaffold as half-deep. This detection is still a  work in progress.
 
 <img src="https://github.com/makovalab-psu/HalfDeep/blob/master/example/genomic_data/halfdeep/fake_genome/half_deep.dat.jpg?raw=true">
-
-&#x1F534;
-&#x21E8;
