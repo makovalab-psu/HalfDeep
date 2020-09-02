@@ -256,7 +256,7 @@ half of the scaffold that appears to be full depth.
 
 HalfDeep attempts to automatically detect half-depth intervals. It shows these
 intervals in red. For this dataset it has incorrectly called all of the FAKE1
-scaffold as half-deep. This detection is stilla  work in progress.
+scaffold as half-deep. This detection is still a  work in progress.
 
 <img src="https://github.com/makovalab-psu/HalfDeep/blob/master/example/genomic_data/halfdeep/fake_genome/half_deep.dat.jpg?raw=true">
 
