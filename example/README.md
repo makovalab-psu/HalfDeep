@@ -11,7 +11,7 @@ interval (120137,167385) is full depth. This mimics a common assembly error for
 heterogametic individuals, where the two sex chromosomes have been misassembled
 into a single scaffold, with the PAR between them.
 
-## Directory layout
+## Initial directory layout
 
 Inputs are the assemblies and the reads files (*.fasta.gz in the directory
 layout shown below).
@@ -40,6 +40,30 @@ We now have fake_genome.idx.
 ```
 .
 └── genomic_data
+   ├── assembly
+   │   ├── fake_genome.fasta.gz
+   │   ├── fake_genome.idx
+   ├── pacbio
+   │   ├── fake_reads.fasta.gz
+```
+
+## (2) Create the 'file of filenames.
+
+The pipeline needs a file containing a list of all the reads filenames. We
+could create this manually with a text editor. But in this case we can use the
+ls command to create it.
+
+```
+cd genomic_data
+ls pacbio/*.fastq.gz > input.fofn
+```
+
+We now have input.fofn.
+
+```
+.
+└── genomic_data
+   │ input.fofn
    ├── assembly
    │   ├── fake_genome.fasta.gz
    │   ├── fake_genome.idx
