@@ -235,6 +235,7 @@ This has created the file half_deep.dat.pdf.
    │   │   ├── percentile_commands.sh
    │   │   ├── halfdeep.dat
    │   │   ├── >>> half_deep.dat.pdf <<<
+&#x21E8;
 ```
 
 The plot is shown below. The horizontal axis is positions along the assembly.
