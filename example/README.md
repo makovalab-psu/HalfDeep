@@ -3,7 +3,7 @@
 This directory contains a toy example for a small 1Mbp genome,
 fake_genome.fa.gz, and simulated pacbio-like reads, fake_reads_*.fa.gz.
 
-The fake genome consists of three scaffolds -- FAKE1, FAKE2, and FAKE3.
+The fake genome consists of three scaffolds &mdash; FAKE1, FAKE2, and FAKE3.
 
 Read depth is roughly 15X. The ground truth of the reads is that FAKE2 and
 FAKE3 are covered at full depth. FAKE1 is mostly covered at half depth, but the
@@ -146,7 +146,7 @@ cd genomic_data
 halfdeep.sh assembly/fake_genome.fasta.gz
 ```
 
-This has produced four files -- scaffold_lengths.dat, depth.dat.gz,
+This has produced four files &mdash; scaffold_lengths.dat, depth.dat.gz,
 percentile_commands.sh, and halfdeep.dat. These will be used in the next step
 to produce a plot.
 
@@ -247,12 +247,12 @@ in those we clip the plot).
 
 The 40th and 60th percentiles of depth are 10.4X and 17.0X. These are divided
 by two and reported as 5.2 and 8.5 and indicated by dashed blue lines. These
-two lines -- half 40th and half 60th -- form a band. Points within that band
-are evidence of a half-depth interval.
+two lines &mdash; half 40th and half 60th &mdash; form a band. Points within
+that band are evidence of a half-depth interval.
 
 Ignoring the red area, visually we can see that most of the FAKE1 scaffold
-falls in or near the half-depth band. But there is an interval in the left
-half of the scaffold that appears to be full depth.
+falls in or near the half-depth band. But there is an interval in the left half
+of the scaffold that appears to be full depth.
 
 HalfDeep attempts to automatically detect half-depth intervals. It shows these
 intervals in red. For this dataset it has incorrectly called all of the FAKE1
