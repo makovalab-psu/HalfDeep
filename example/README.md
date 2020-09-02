@@ -260,3 +260,4 @@ scaffold as half-deep. This detection is still a  work in progress.
 
 <img src="https://github.com/makovalab-psu/HalfDeep/blob/master/example/genomic_data/halfdeep/fake_genome/half_deep.dat.jpg?raw=true">
 
+&#x1F534;
