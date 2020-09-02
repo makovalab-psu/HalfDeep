@@ -47,7 +47,7 @@ We now have fake_genome.idx.
    │   ├── fake_reads.fasta.gz
 ```
 
-## (2) Create the 'file of filenames.
+## (2) Create the 'file of filenames'.
 
 The pipeline needs a file containing a list of all the reads filenames. We
 could create this manually with a text editor. But in this case we can use the
@@ -71,7 +71,42 @@ We now have input.fofn.
    │   ├── fake_reads.fasta.gz
 ```
 
-_TBD_
+## (3) Map the reads.
+
+For each reads file, we need to run 'bam_depth.sh'. The first argument in the
+assembly file. The second argument is the number of the read file. This is the
+index of the reads file in input.fofn. If we had five reads files we would need
+to run bam_depth.sh five times, with the numbers 1, 2, 3, 4, and 5 as the
+second argument.
+
+```
+cd genomic_data
+bam_depth.sh assembly/fake_genome.fasta.gz 1
+```
+
+We now have a new subtree 'halfdeep', and the mapped read depth file
+fake_reads.depth.dat.gz. Each run of bam_depth.sh will create a read depth file
+for the corresponding reads file.
+
+```
+.
+└── genomic_data
+   │ input.fofn
+   ├── assembly
+   │   ├── fake_genome.fasta.gz
+   │   ├── fake_genome.idx
+   ├── pacbio
+   │   ├── fake_reads.fasta.gz
+   ├── halfdeep
+   │   ├── fake_genome
+   │   |   ├── mapped_reads
+   │   |   │   ├── fake_reads.depth.dat.gz
+
+```
+
+
+
+More _TBD_
 
 (be sure to include the expected plot).
 
