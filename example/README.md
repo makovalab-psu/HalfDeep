@@ -250,7 +250,7 @@ by two and reported as 5.2 and 8.5 and indicated by dashed blue lines. These
 two lines &mdash; half 40th and half 60th &mdash; form a band. Points within
 that band are evidence of a half-depth interval.
 
-Ignoring the red area, visually we can see that most of the FAKE1 scaffold
+Ignoring the red overlay, visually we can see that most of the FAKE1 scaffold
 falls in or near the half-depth band. But there is an interval in the left half
 of the scaffold that appears to be full depth.
 
