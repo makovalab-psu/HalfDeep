@@ -46,9 +46,13 @@ We now have fake_genome.idx.
 └── genomic_data
    ├── assembly
    │   ├── fake_genome.fasta.gz
-   │   ├── fake_genome.idx
+   │   ├── >>> fake_genome.idx <<<
    ├── pacbio
-   │   ├── fake_reads.fasta.gz
+   │   ├── fake_reads_001.fasta.gz
+   │   ├── fake_reads_002.fasta.gz
+   │   ├── fake_reads_003.fasta.gz
+   │   ├── fake_reads_004.fasta.gz
+   │   ├── fake_reads_005.fasta.gz
 ```
 
 ## (2) Create the 'file of filenames'.
@@ -67,12 +71,16 @@ We now have input.fofn.
 ```
 .
 └── genomic_data
-   │ input.fofn
+   │ >>> input.fofn <<<
    ├── assembly
    │   ├── fake_genome.fasta.gz
    │   ├── fake_genome.idx
    ├── pacbio
-   │   ├── fake_reads.fasta.gz
+   │   ├── fake_reads_001.fasta.gz
+   │   ├── fake_reads_002.fasta.gz
+   │   ├── fake_reads_003.fasta.gz
+   │   ├── fake_reads_004.fasta.gz
+   │   ├── fake_reads_005.fasta.gz
 ```
 
 This is what input.fofn should look like:
@@ -116,15 +124,19 @@ are not saved, only the files containing coverage depth.
    │   ├── fake_genome.fasta.gz
    │   ├── fake_genome.idx
    ├── pacbio
-   │   ├── fake_reads.fasta.gz
-   ├── halfdeep
-   │   ├── fake_genome
-   │   |   ├── mapped_reads
-   │   |   │   ├── fake_reads_001.depth.dat.gz
-   │   |   │   ├── fake_reads_002.depth.dat.gz
-   │   |   │   ├── fake_reads_003.depth.dat.gz
-   │   |   │   ├── fake_reads_004.depth.dat.gz
-   │   |   │   ├── fake_reads_005.depth.dat.gz
+   │   ├── fake_reads_001.fasta.gz
+   │   ├── fake_reads_002.fasta.gz
+   │   ├── fake_reads_003.fasta.gz
+   │   ├── fake_reads_004.fasta.gz
+   │   ├── fake_reads_005.fasta.gz
+   ├── >>> halfdeep <<<
+   │   ├── >>> fake_genome <<<
+   │   |   ├── >>> mapped_reads <<<
+   │   |   │   ├── >>> fake_reads_001.depth.dat.gz <<<
+   │   |   │   ├── >>> fake_reads_002.depth.dat.gz <<<
+   │   |   │   ├── >>> fake_reads_003.depth.dat.gz <<<
+   │   |   │   ├── >>> fake_reads_004.depth.dat.gz <<<
+   │   |   │   ├── >>> fake_reads_005.depth.dat.gz <<<
 ```
 
 ## (4) Combine the coverage depth files and identify half-deep intervals
@@ -145,7 +157,11 @@ percentile_commands.sh, and halfdeep.dat.
    │   ├── fake_genome.fasta.gz
    │   ├── fake_genome.idx
    ├── pacbio
-   │   ├── fake_reads.fasta.gz
+   │   ├── fake_reads_001.fasta.gz
+   │   ├── fake_reads_002.fasta.gz
+   │   ├── fake_reads_003.fasta.gz
+   │   ├── fake_reads_004.fasta.gz
+   │   ├── fake_reads_005.fasta.gz
    ├── halfdeep
    │   ├── fake_genome
    │   |   ├── mapped_reads
@@ -154,10 +170,10 @@ percentile_commands.sh, and halfdeep.dat.
    │   |   │   ├── fake_reads_003.depth.dat.gz
    │   |   │   ├── fake_reads_004.depth.dat.gz
    │   |   │   ├── fake_reads_005.depth.dat.gz
-   │   │   ├── scaffold_lengths.dat
-   │   │   ├── depth.dat.gz
-   │   │   ├── percentile_commands.sh
-   │   │   ├── halfdeep.dat
+   │   │   ├── >>> scaffold_lengths.dat <<<
+   │   │   ├── >>> depth.dat.gz <<<
+   │   │   ├── >>> percentile_commands.sh <<<
+   │   │   ├── >>> halfdeep.dat <<<
 ```
 
 ## (5) Plotting
@@ -196,7 +212,11 @@ This has created the file half_deep.dat.pdf.
    │   ├── fake_genome.fasta.gz
    │   ├── fake_genome.idx
    ├── pacbio
-   │   ├── fake_reads.fasta.gz
+   │   ├── fake_reads_001.fasta.gz
+   │   ├── fake_reads_002.fasta.gz
+   │   ├── fake_reads_003.fasta.gz
+   │   ├── fake_reads_004.fasta.gz
+   │   ├── fake_reads_005.fasta.gz
    ├── halfdeep
    │   ├── fake_genome
    │   |   ├── mapped_reads
