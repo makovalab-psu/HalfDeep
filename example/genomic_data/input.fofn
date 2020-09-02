@@ -1,1 +1,5 @@
-pacbio/fake_reads.fasta.gz
+pacbio/fake_reads_001.fasta.gz
+pacbio/fake_reads_002.fasta.gz
+pacbio/fake_reads_003.fasta.gz
+pacbio/fake_reads_004.fasta.gz
+pacbio/fake_reads_005.fasta.gz

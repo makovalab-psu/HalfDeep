@@ -1,7 +1,7 @@
 ### Brief Tutorial, Identifying a misassembled sex chromosome.
 
 This directory contains a toy example for a small 1Mbp genome,
-fake_genome.fa.gz, and simulated pacbio-like reads, fake_reads.fa.gz.
+fake_genome.fa.gz, and simulated pacbio-like reads, fake_reads_*.fa.gz.
 
 The fake genome consists of three scaffolds -- FAKE1, FAKE2, and FAKE3.
 
@@ -13,7 +13,7 @@ into a single scaffold, with the PAR between them.
 
 ## Initial directory layout
 
-Inputs are the assemblies and the reads files (*.fasta.gz in the directory
+Inputs are an assembly and five reads files (*.fasta.gz in the directory
 layout shown below).
 
 ```
@@ -22,7 +22,11 @@ layout shown below).
    ├── assembly
    │   ├── fake_genome.fasta.gz
    ├── pacbio
-   │   ├── fake_reads.fasta.gz
+   │   ├── fake_reads_001.fasta.gz
+   │   ├── fake_reads_002.fasta.gz
+   │   ├── fake_reads_003.fasta.gz
+   │   ├── fake_reads_004.fasta.gz
+   │   ├── fake_reads_005.fasta.gz
 ```
 
 ## (1) Index the assembly
@@ -71,20 +75,32 @@ We now have input.fofn.
    │   ├── fake_reads.fasta.gz
 ```
 
+This is what input.fofn should look like:
+
+```
+pacbio/fake_reads_001.fasta.gz
+pacbio/fake_reads_002.fasta.gz
+pacbio/fake_reads_003.fasta.gz
+pacbio/fake_reads_004.fasta.gz
+pacbio/fake_reads_005.fasta.gz
+```
+
 ## (3) Map the reads.
 
 For each reads file, we need to run 'bam_depth.sh'. The first argument in the
 assembly file. The second argument is the number of the read file. This is the
-index of the reads file in input.fofn. If we had five reads files we would need
-to run bam_depth.sh five times, with the numbers 1, 2, 3, 4, and 5 as the
-second argument.
+index of the reads file in input.fofn. We need to run bam_depth.sh five times.
 
 ```
 cd genomic_data
 bam_depth.sh assembly/fake_genome.fasta.gz 1
+bam_depth.sh assembly/fake_genome.fasta.gz 2
+bam_depth.sh assembly/fake_genome.fasta.gz 3
+bam_depth.sh assembly/fake_genome.fasta.gz 4
+bam_depth.sh assembly/fake_genome.fasta.gz 5
 ```
 
-We now have a new subtree 'halfdeep', and the mapped read depth file
+We now have a new subtree 'halfdeep', and the mapped read depth files
 fake_reads.depth.dat.gz. Each run of bam_depth.sh will create a read depth file
 for the corresponding reads file.
 
