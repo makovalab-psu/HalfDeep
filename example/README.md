@@ -1,4 +1,4 @@
-### Brief Tutorial -- Identifying a misassembled sex chromosome.
+## Brief Tutorial -- Identifying a misassembled sex chromosome.
 
 This directory contains a toy example for a small 1Mbp genome,
 fake_genome.fa.gz, and simulated pacbio-like reads, fake_reads_*.fa.gz.
@@ -11,7 +11,7 @@ interval (120137,167385) is full depth. This mimics a common assembly error for
 heterogametic individuals, where the two sex chromosomes have been misassembled
 into a single scaffold, with the PAR between them.
 
-#### Initial directory layout
+### Initial directory layout
 
 Inputs are an assembly and five reads files (*.fasta.gz in the directory
 layout shown below).
@@ -29,7 +29,7 @@ layout shown below).
    │   ├── fake_reads_005.fasta.gz
 ```
 
-## (1) Index the assembly
+### (1) Index the assembly
 
 Run minimap2 to create an index for the assembly. This must use the option
 "-x map-pb" to match what is used later when we map reads to the assembly. 
@@ -55,7 +55,7 @@ We now have fake_genome.idx.
    │   ├── fake_reads_005.fasta.gz
 ```
 
-## (2) Create the 'file of filenames'.
+### (2) Create the 'file of filenames'.
 
 The pipeline needs a file containing a list of all the reads filenames. We
 could create this manually with a text editor. But in this case we can use the
@@ -93,7 +93,7 @@ pacbio/fake_reads_004.fasta.gz
 pacbio/fake_reads_005.fasta.gz
 ```
 
-## (3) Map the reads.
+### (3) Map the reads.
 
 For each reads file, we need to run 'bam_depth.sh'. The first argument is the
 assembly file. The second argument is the number of the read file (this is the
@@ -139,7 +139,7 @@ are not saved, only the files containing coverage depth.
    │   |   │   ├── >>> fake_reads_005.depth.dat.gz <<<
 ```
 
-## (4) Combine the coverage depth files and identify half-deep intervals
+### (4) Combine the coverage depth files and identify half-deep intervals
 
 ```
 cd genomic_data
@@ -177,7 +177,7 @@ to produce a plot.
    │   │   ├── >>> halfdeep.dat <<<
 ```
 
-## (5) Plotting
+### (5) Plotting
 
 Open R with the working directory at genomic_data/halfdeep/fake_genome.
 
