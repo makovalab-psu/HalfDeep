@@ -212,5 +212,6 @@ This has created the file half_deep.dat.pdf.
    │   │   ├── half_deep.dat.pdf
 ```
 
-<img src="https://github.com/makovalab-psu/HalfDeep/tree/master/example/genomic_data/halfdeep/fake_genome/half_deep.dat.jpg">
+<img src="https://github.com/makovalab-psu/HalfDeep/blob/master/example/genomic_data/halfdeep/fake_genome/half_deep.dat.jpg?raw=true">
+
 
