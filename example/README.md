@@ -212,11 +212,5 @@ This has created the file half_deep.dat.pdf.
    │   │   ├── half_deep.dat.pdf
 ```
 
-<img src="https://github.com/makovalab-psu/HalfDeep/tree/master/example/genomic_data/halfdeep/fake_genome/half_deep.dat.png">
-
-To plot just a few scaffolds:
-```
-scaffoldsToPlot=c("Super_scaffold_8","Super_scaffold_17")
-halfdeep_plot(scaffolds,depth,halfDeep,percentileToValue,assembly,scaffoldsToPlot=scaffoldsToPlot)
-```
+<img src="https://githubusercontent.com/makovalab-psu/HalfDeep/tree/master/example/genomic_data/halfdeep/fake_genome/half_deep.dat.png">
 
