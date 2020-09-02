@@ -95,12 +95,12 @@ pacbio/fake_reads_005.fasta.gz
 
 ## (3) Map the reads.
 
-For each reads file, we need to run 'bam_depth.sh'. The first argument in the
-assembly file. The second argument is the number of the read file. This is the
-index of the reads file in input.fofn. We need to run bam_depth.sh five times.
-For real data we would usually want to submit these as five separate jobs on a
-compute cluster, but these files are small enough that all five should finish
-in less than a minute.
+For each reads file, we need to run 'bam_depth.sh'. The first argument is the
+assembly file. The second argument is the number of the read file (this is the
+line number of the reads file in input.fofn). We need to run bam_depth.sh five
+times. For real data we might submit these as five separate jobs on a compute
+cluster, but these files are small enough that all five should finish in less
+than a minute.
 
 ```
 cd genomic_data
@@ -147,7 +147,8 @@ halfdeep.sh assembly/fake_genome.fasta.gz
 ```
 
 This has produced four files -- scaffold_lengths.dat, depth.dat.gz,
-percentile_commands.sh, and halfdeep.dat.
+percentile_commands.sh, and halfdeep.dat. These will be used in the next step
+to produce a plot.
 
 ```
 .
@@ -178,11 +179,15 @@ percentile_commands.sh, and halfdeep.dat.
 
 ## (5) Plotting
 
-Open R with the working directory at genomic_data/halfdeep/fake_genome
+Open R with the working directory at genomic_data/halfdeep/fake_genome.
 
-Then, in R, read in the data and prepare for plotting:
+Load the HalfDeep functions in R:
 ```
 source("path_to_halfdeep/halfdeep.r")
+```
+
+Then read in the data and prepare for plotting:
+```
 scaffolds         = read_scaffold_lengths("scaffold_lengths.dat")
 scaffoldToOffset  = linearized_scaffolds(scaffolds)
 depth             = read_depth("depth.dat.gz",scaffoldToOffset)
