@@ -212,6 +212,26 @@ This has created the file half_deep.dat.pdf.
    │   │   ├── half_deep.dat.pdf
 ```
 
-<img src="https://github.com/makovalab-psu/HalfDeep/blob/master/example/genomic_data/halfdeep/fake_genome/half_deep.dat.jpg?raw=true">
+The plot is shown below. The horizontal axis is positions along the assembly.
+The vertical axis is coverage depth. Each dot is the average depth for a 1Kbp
+window (non-overlapping). Median depth is 14.6X, as indicated in the second
+line of the caption and as a dashed blue line. The plot is clipped at 1.5 times
+the median, 21.8X (for real data we would have a few very deeply covered
+intervals where the assembly has collapsed repeats; since we aren't interested
+in those we clip the plot).
 
+The 40th and 60th percentiles of depth are 10.4X and 17.0X. These are divided
+by two and reported as 5.2 and 8.5 and indicated by dashed blue lines. These
+two lines -- half 40th and half 60th -- form a band. Points within that band
+are evidence of a half-depth interval.
+
+Ignoring the red area, visually we can see that most of the FAKE1 scaffold
+falls in or near the half-depth band. But there is an interval in the left
+half of the scaffold that appears to be full depth.
+
+HalfDeep attempts to automatically detect half-depth intervals. It shows these
+intervals in red. For this dataset it has incorrectly called all of the FAKE1
+scaffold as half-deep. This detection is stilla  work in progress.
+
+<img src="https://github.com/makovalab-psu/HalfDeep/blob/master/example/genomic_data/halfdeep/fake_genome/half_deep.dat.jpg?raw=true">
 
