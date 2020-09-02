@@ -11,18 +11,40 @@ interval (120137,167385) is full depth. This mimics a common assembly error for
 heterogametic individuals, where the two sex chromosomes have been misassembled
 into a single scaffold, with the PAR between them.
 
-## Expected directory layout
+## Directory layout
 
-Inputs are the assemblies and the reads files (*.fasta.gz and *.fastq.gz in the
-directory layout shown below).
+Inputs are the assemblies and the reads files (*.fasta.gz in the directory
+layout shown below).
 
 ```
 .
 └── genomic_data
-   ├── pacbio
-   │   ├── m54178_170623_204539.subreads.fastq.gz
    ├── assembly
-   │   ├── mBalMus1.pri.cur.20190618.fasta.gz
+   │   ├── fake_genome.fasta.gz
+   ├── pacbio
+   │   ├── fake_reads.fasta.gz
+```
+
+## (1) Index the assembly
+
+Run minimap2 to create an index for the assembly. This must use the option
+"-x map-pb" to match what is used later when we map reads to the assembly. 
+
+```
+cd genomic_data/assembly
+minimap2 -x map-pb -d fake_genome.idx fake_genome.fasta.gz
+```
+
+We now have fake_genome.idx.
+
+```
+.
+└── genomic_data
+   ├── assembly
+   │   ├── fake_genome.fasta.gz
+   │   ├── fake_genome.idx
+   ├── pacbio
+   │   ├── fake_reads.fasta.gz
 ```
 
 _TBD_
