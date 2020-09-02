@@ -11,7 +11,7 @@ interval (120137,167385) is full depth. This mimics a common assembly error for
 heterogametic individuals, where the two sex chromosomes have been misassembled
 into a single scaffold, with the PAR between them.
 
-## Initial directory layout
+#### Initial directory layout
 
 Inputs are an assembly and five reads files (*.fasta.gz in the directory
 layout shown below).
