@@ -55,7 +55,7 @@ We now have fake_genome.idx.
    │   ├── fake_reads_005.fasta.gz
 ```
 
-### (2) Create the 'file of filenames'.
+### (2) Create the 'file of filenames'
 
 The pipeline needs a file containing a list of all the reads filenames. We
 could create this manually with a text editor. But in this case we can use the
@@ -93,7 +93,7 @@ pacbio/fake_reads_004.fasta.gz
 pacbio/fake_reads_005.fasta.gz
 ```
 
-### (3) Map the reads.
+### (3) Map the reads
 
 For each reads file, we need to run 'bam_depth.sh'. The first argument is the
 assembly file. The second argument is the number of the read file (this is the
@@ -177,7 +177,7 @@ to produce a plot.
    │   │   ├── >>> halfdeep.dat <<<
 ```
 
-### (5) Plotting
+### (5) Plot the results
 
 Open R with the working directory at genomic_data/halfdeep/fake_genome.
 
