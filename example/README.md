@@ -209,7 +209,7 @@ This has created the file half_deep.dat.pdf.
    │   │   ├── depth.dat.gz
    │   │   ├── percentile_commands.sh
    │   │   ├── halfdeep.dat
-   │   │   ├── &#x1F536; half_deep.dat.pdf
+   │   │   ├── >>> half_deep.dat.pdf <<<
 ```
 
 The plot is shown below. The horizontal axis is positions along the assembly.
