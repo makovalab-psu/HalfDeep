@@ -1,8 +1,10 @@
 #!/bin/bash
 
 if [ -z $1 ]; then
-	echo "Usage: ./bam_depth <ref>"
-	echo "    Assumes we have <ref> and <input.fofn> in the same dir"
+	echo "Usage: ./bam_depth <ref> [<number>]"
+	echo "    Assumes we have <ref> and input.fofn in the current dir"
+	echo "    If <number> is not given, SLURM_ARRAY_TASK_ID is used"
+	echo "    <number> is the line number in input.fofn of the file to process"
 	exit -1
 fi
 
