@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """
 Read a fasta file and report the names and lengths of all the sequences.
 """
@@ -19,7 +19,7 @@ def main():
 			inFile = file(inFilename,"rt")
 
 	for (name,sequence) in fasta_sequences(inFile):
-		print("%s\t%d" % (name,len(sequence)))
+		print "%s\t%d" % (name,len(sequence))
 
 	if (inFilename != None): inFile.close()
 
