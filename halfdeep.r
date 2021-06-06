@@ -586,7 +586,7 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 	if (assemblyName == "")
 		title = paste("Copy Number\n(per ControlFREEC)",sep="")
 	else
-		title = paste("Copy Number for ",assemblyName,"\n(per ControlFREEC)",sep="")
+		title = paste("Copy Number on ",assemblyName,"\n(per ControlFREEC)",sep="")
 	ylab = "depth (black/gray) and CN (blue/red)"
 
 	par(mar=c(yLabelSpace,4,2.5,0.2)+0.1)     # BLTR
