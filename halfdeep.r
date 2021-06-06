@@ -523,6 +523,12 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 		depth[,"s"] = scaffoldToOffset[depth$scaffold] + depth$start
 		depth[,"e"] = scaffoldToOffset[depth$scaffold] + depth$end
 
+		if (showControlFreec)
+			{
+			controlFreec = controlFreec[controlFreec$scaffold %in% names(scaffoldToOffset),]
+			controlFreec[,"s"] = scaffoldToOffset[controlFreec$scaffold] + controlFreec$start
+			}
+
 		scaffoldLen = sum(scaffolds$length[scaffolds$name==scaffoldsToPlot])
 		}
 
