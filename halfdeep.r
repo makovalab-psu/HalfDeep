@@ -542,10 +542,12 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 	scaffoldTicks = 1 + c(scaffolds$offset,sum(as.numeric(scaffolds$length)))
 	scaffoldCenters = (as.numeric(scaffoldTicks[1:nrow(scaffolds)])+as.numeric(scaffoldTicks[2:(nrow(scaffolds)+1)])) / 2
 
-	CNSpacing = depthClip / 57
+	CNSpacing = depthClip / 32
 
 	xlim = c(1,max(scaffoldTicks))
 	ylim = if (showControlFreec) c(-5*CNSpacing,depthClip) else c(0,depthClip)
+	ylimLong = ylim
+	ylimLong[1] = ylimLong[1] - CNSpacing
 
 	depthColor       = rgb(.6,.6,.6)
 	halfDepthColor   = "black"
@@ -564,7 +566,7 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 	turnDeviceOff = F
 	if (is.null(plotFilename))
 		{
-		quartz(width=width,height=height)
+		quartz(width=width,height=height,pointsize=pointsize)
 		}
 	else
 		{
@@ -575,8 +577,11 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 
 	# create empty plot
 
-	title = paste("coverage depth in ",assemblyName,"\nmedian=",depth50Str,sep="")
-	ylab  = paste("aligned read depth in 1Kbp windows (clipped at ",depthClipStr,")",sep="")
+	if (assemblyName == "")
+		title = paste("Copy Number\n(per ControlFREEC)",sep="")
+	else
+		title = paste("Copy Number for ",assemblyName,"\n(per ControlFREEC)",sep="")
+	ylab = "depth (black/gray) and CN (blue/red)"
 
 	par(mar=c(yLabelSpace,4,2.5,0.2)+0.1)     # BLTR
 	options(scipen=10)
@@ -586,7 +591,7 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 
 	if ((tickSpacing > 0) & (xlim[2]>=tickSpacing))          # equal-spaced ticks
 		axis(1,at=seq(tickSpacing,xlim[2],by=tickSpacing),labels=F,col="gray")
-	axis(1,at=scaffoldTicks,labels=F,tck=-0.04)              # scaffold ticks
+	axis(1,at=scaffoldTicks,labels=F,tck=-0.08)              # scaffold ticks
 	axis(1,at=scaffoldCenters,tick=F,labels=scaffolds$name,  # scaffold labels
 		 las=2,cex.axis=0.7)
 
@@ -597,15 +602,18 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 	halfsies = (depth$depth>=halfDepthLo) & (depth$depth<=halfDepthHi)
 	points(depth$s[halfsies],depth$depth[halfsies],col=halfDepthColor,pch=19,cex=0.1)
 
+	for (ix in 1:length(scaffoldTicks))
+		lines(c(scaffoldTicks[ix],scaffoldTicks[ix]),ylimLong,col="black",lwd=1,lty=2)
+
 	# add horizontal lines to show median and half-deep limits
 
 	lines(xlim,c(depth50,depth50),col=depthLimitsColor,lwd=2,lty=2)
 	lines(xlim,c(halfDepthHi,halfDepthHi),col=depthLimitsColor,lwd=2,lty=2)
 	lines(xlim,c(halfDepthLo,halfDepthLo),col=depthLimitsColor,lwd=2,lty=2)
 
-	text(0,depth50,"median ",adj=1,cex=0.7,col=depthLimitsColor)
-	text(0,halfDepthLo,"half-40th ",adj=1,cex=0.7,col=depthLimitsColor)
-	text(0,halfDepthHi,"half-60th ",adj=1,cex=0.7,col=depthLimitsColor)
+	text(0,depth50,    "median ",   adj=1,cex=0.5,col=depthLimitsColor)
+	text(0,halfDepthLo,"half-40th ",adj=1,cex=0.5,col=depthLimitsColor)
+	text(0,halfDepthHi,"half-60th ",adj=1,cex=0.5,col=depthLimitsColor)
 
 	# add controlFreec copy number information
 	# from bottom up, rows are copy number = 0, 1, 2, >2
@@ -615,7 +623,7 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 		for (cn in -2:-5)
 			{
 			lines(xlim,c(cn*CNSpacing,cn*CNSpacing),col="red",lty=1)
-			text(-0.005*xlim[2],cn*CNSpacing,cex=.5,adj=1,
+			text(-0.005*xlim[2],cn*CNSpacing,cex=0.4,adj=1,
 			     ifelse(cn==-2,"CN>2",paste("CN=",cn+5,sep="")))
 			}
 		points(controlFreec$s,(controlFreec$CNclipped-5)*CNSpacing,pch=16,cex=0.5,
