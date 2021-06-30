@@ -567,6 +567,8 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 	if (!is.null(scaffoldInterval))
 		{
 		xlim = scaffoldInterval
+		depth = depth[(depth$s>=xlim[1])&(depth$s<=xlim[2]),]
+		controlFreec = controlFreec[(controlFreec$s>=xlim[1])&(controlFreec$s<=xlim[2]),]
 		scaffoldCenters = (scaffoldInterval[1]+scaffoldInterval[2])/2
 		}
 	else
@@ -586,7 +588,7 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 	# clipping
 
 	depth$clipped = ifelse(depth$depth<=depthClip,depth$depth,depthClip)
-	depth$color = ifelse(depth$depth<=depthClip,depthColor,clippedColor)
+	depth$color   = ifelse(depth$depth<=depthClip,depthColor,clippedColor)
 
 	controlFreec$CNclipped = ifelse(controlFreec$CopyNumber<=2,controlFreec$CopyNumber,3)
 
@@ -649,9 +651,9 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 	lines(xlim,c(halfDepthHi,halfDepthHi),col=depthLimitsColor,lwd=2,lty=2)
 	lines(xlim,c(halfDepthLo,halfDepthLo),col=depthLimitsColor,lwd=2,lty=2)
 
-	text(0,depth50,    "median ",   adj=1,cex=0.5,col=depthLimitsColor)
-	text(0,halfDepthLo,"half-40th ",adj=1,cex=0.5,col=depthLimitsColor)
-	text(0,halfDepthHi,"half-60th ",adj=1,cex=0.5,col=depthLimitsColor)
+	text(xlim[1],depth50,    "median ",   adj=1,cex=0.5,col=depthLimitsColor)
+	text(xlim[1],halfDepthLo,"half-40th ",adj=1,cex=0.5,col=depthLimitsColor)
+	text(xlim[1],halfDepthHi,"half-60th ",adj=1,cex=0.5,col=depthLimitsColor)
 
 	# add controlFreec copy number information
 	# from bottom up, rows are copy number = 0, 1, 2, >2
@@ -661,7 +663,7 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 		for (cn in -2:-5)
 			{
 			lines(xlim,c(cn*CNSpacing,cn*CNSpacing),col="red",lty=1)
-			text(-0.005*xlim[2],cn*CNSpacing,cex=0.4,adj=1,
+			text(xlim[1]-0.005*(xlim[2]-xlim[1]),cn*CNSpacing,cex=0.4,adj=1,
 			     ifelse(cn==-2,"CN>2",paste("CN=",cn+5,sep="")))
 			}
 		points(controlFreec$s,(controlFreec$CNclipped-5)*CNSpacing,pch=16,cex=0.5,
