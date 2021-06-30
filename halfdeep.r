@@ -627,7 +627,7 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 		if (tickLabels)
 			axis(1,at=labeledTicks,tick=F,                       # tick labels
 			     labels=prettyNum(labeledTicks,big.mark=",",scientific=FALSE),
-				 las=2,cex.axis=0.5)
+				 las=2,pos=ylim[1]-0.5,cex.axis=0.5)
 		}
 	axis(1,at=scaffoldTicks,labels=F,tck=-0.08)                  # scaffold ticks
 	axis(1,at=scaffoldCenters,tick=F,labels=scaffolds$name,      # scaffold labels
