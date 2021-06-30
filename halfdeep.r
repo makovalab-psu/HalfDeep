@@ -453,6 +453,7 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
                                scaffoldsToPlot=NULL,
                                plotFilename=NULL,
                                tickSpacing=10000000,
+                               tickLabels=F,
                                width=17,height=7,pointsize=18,
                                yLabelSpace=7,
                                maxDepth=NA,
@@ -478,6 +479,8 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 	# tickSpacing:            Spacing of evenly-spaced ticks along the
 	#                         horizontal axis. If this is zero, these ticks
 	#                         are inhibited. The default is 10Mbp.
+	# tickLabels:             If true, add numeric labels to the horizontal
+	#                         axis.
 	# width,height,pointsize: These are passed through to whatever function
 	#                         creates the plot window.
 	# yLabelSpace:            Space below the plot. This can be increased to
@@ -494,7 +497,18 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 	# if we have a scaffold subset, reduce our copy of the data to that subset
 
 	if (!is.null(scaffoldInterval))
-		stop("scaffoldInterval is not implemented yet")
+		{
+		if (is.null(scaffoldsToPlot))
+			{
+			if (length(scaffoldsToPlot) > 1)
+				stop("scaffoldInterval cannot be used with more than one scaffold")
+			}
+		else
+			{
+			if (length(unique(scaffolds$name)) > 1)
+				stop("scaffoldInterval cannot be used with more than one scaffold")
+			}
+		}
 
 	showControlFreec = !is.null(controlFreec)
 
@@ -550,7 +564,16 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 
 	CNSpacing = depthClip / 32
 
-	xlim = c(1,max(scaffoldTicks))
+	if (!is.null(scaffoldInterval))
+		{
+		xlim = scaffoldInterval
+		scaffoldCenters = (scaffoldInterval[1]+scaffoldInterval[2])/2
+		}
+	else
+		{
+		xlim = c(1,max(scaffoldTicks))
+		}
+
 	ylim = if (showControlFreec) c(-5*CNSpacing,depthClip) else c(0,depthClip)
 	ylimLong = ylim
 	ylimLong[1] = ylimLong[1] - CNSpacing
@@ -595,10 +618,19 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 
 	# add horizontal axis
 
-	if ((tickSpacing > 0) & (xlim[2]>=tickSpacing))          # equal-spaced ticks
-		axis(1,at=seq(tickSpacing,xlim[2],by=tickSpacing),labels=F,col="gray")
-	axis(1,at=scaffoldTicks,labels=F,tck=-0.08)              # scaffold ticks
-	axis(1,at=scaffoldCenters,tick=F,labels=scaffolds$name,  # scaffold labels
+	if ((tickSpacing > 0) & (xlim[2]>=tickSpacing))              # equal-spaced ticks
+		{
+		leftTick = xlim[1] + (tickSpacing-1) - ((xlim[1] + (tickSpacing-1)) %% tickSpacing)
+		ticks = seq(leftTick,xlim[2],by=tickSpacing)
+		labeledTicks = ticks[abs(scaffoldCenters-ticks)>=tickSpacing/4]
+		axis(1,at=ticks,labels=F,col="gray")
+		if (tickLabels)
+			axis(1,at=labeledTicks,tick=F,                       # tick labels
+			     labels=prettyNum(labeledTicks,big.mark=",",scientific=FALSE),
+				 las=2,cex.axis=0.5)
+		}
+	axis(1,at=scaffoldTicks,labels=F,tck=-0.08)                  # scaffold ticks
+	axis(1,at=scaffoldCenters,tick=F,labels=scaffolds$name,      # scaffold labels
 		 las=2,cex.axis=0.7)
 
 	# draw depth as gray, and depth in half-deep intervals as black
