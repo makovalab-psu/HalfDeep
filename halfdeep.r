@@ -624,12 +624,14 @@ control_freec_plot <- function(scaffolds,depth,controlFreec,percentileToValue,
 		{
 		leftTick = xlim[1] + (tickSpacing-1) - ((xlim[1] + (tickSpacing-1)) %% tickSpacing)
 		ticks = seq(leftTick,xlim[2],by=tickSpacing)
-		labeledTicks = ticks[abs(scaffoldCenters-ticks)>=tickSpacing/4]
 		axis(1,at=ticks,labels=F,col="gray")
 		if (tickLabels)
+			{
+			labeledTicks = ticks[abs(scaffoldCenters-ticks)>=tickSpacing/4]
 			axis(1,at=labeledTicks,tick=F,                       # tick labels
 			     labels=prettyNum(labeledTicks,big.mark=",",scientific=FALSE),
 				 las=2,pos=ylim[1]-0.5,cex.axis=0.5)
+			}
 		}
 	axis(1,at=scaffoldTicks,labels=F,tck=-0.08)                  # scaffold ticks
 	axis(1,at=scaffoldCenters,tick=F,labels=scaffolds$name,      # scaffold labels
