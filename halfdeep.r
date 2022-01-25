@@ -1,6 +1,6 @@
 # plotting half-deep intervals and depth along an assembly
 
-read_scaffold_lengths <- function(lengthsFilename,scaffoldsOfInterest=NULL)
+read_scaffold_lengths <- function(lengthsFilename,scaffoldsOfInterest=NULL,sortByLength=T)
 	#
 	# Read a file containing scaffold names and lengths. Result is either
 	# (a) reduced to scaffolds of interest, in order or (b) sorted by
@@ -36,7 +36,7 @@ read_scaffold_lengths <- function(lengthsFilename,scaffoldsOfInterest=NULL)
 		names(scaffoldsToNumber) = scaffoldsOfInterest
 		scaffolds = scaffolds[order(scaffoldsToNumber[scaffolds$name]),]
 		}
-	else
+	else if (sortByLength)
 		{
 		# sort by decreasing length
 		scaffolds = scaffolds[order(-scaffolds$length),]
