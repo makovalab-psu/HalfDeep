@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z $1 ]; then
-	echo "Usage: ./bam_depth.asm20 <ref> [<number>]"
+	echo "Usage: ./bam_depth.hifi <ref> [<number>]"
 	echo "    Assumes we have <ref> and input.fofn in the current dir"
 	echo "    If <number> is not given, SLURM_ARRAY_TASK_ID is used"
 	echo "    <number> is the line number in input.fofn of the file to process"
@@ -70,8 +70,8 @@ else
 	echo "Start aligning $qry to $ref.idx"
 
 	echo "\
-	minimap2 -x asm20 -a -t $cpus $ref.idx $qry | samtools view -hb - > $out.bam"
-	minimap2 -x asm20 -a -t $cpus $ref.idx $qry | samtools view -hb - > $out.bam
+	minimap2 -x map-hifi -a -t $cpus $ref.idx $qry | samtools view -hb - > $out.bam"
+	minimap2 -x map-hifi -a -t $cpus $ref.idx $qry | samtools view -hb - > $out.bam
 fi
 
 if [ ! -e $out.bam ]; then
