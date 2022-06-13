@@ -70,8 +70,8 @@ else
 	echo "Start aligning $qry to $ref.idx"
 
 	echo "\
-	minimap2 -x map-hifi -a -t $cpus --split-prefix temp $ref.idx $qry | samtools view -hb - > $out.bam"
-	minimap2 -x map-hifi -a -t $cpus --split-prefix temp $ref.idx $qry | samtools view -hb - > $out.bam
+	minimap2 -x map-hifi -a -t $cpus $ref.idx $qry | samtools view -hb - > $out.bam"
+	minimap2 -x map-hifi -a -t $cpus $ref.idx $qry | samtools view -hb - > $out.bam
 fi
 
 if [ ! -e $out.bam ]; then
