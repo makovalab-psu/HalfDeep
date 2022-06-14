@@ -2,9 +2,9 @@
 
 if [ -z $1 ]; then
 	echo "Usage: ./bam_depth.illumina <ref> [<number>]"
-	echo "    Assumes we have <ref> and input.fofn in the current dir"
+	echo "    Assumes we have <ref> and input.illumina.fofn in the current dir"
 	echo "    If <number> is not given, SLURM_ARRAY_TASK_ID is used"
-	echo "    <number> is the line number in input.fofn of the file to process"
+	echo "    <number> is the line number in input.illumina.fofn of the file to process"
 	exit -1
 fi
 
