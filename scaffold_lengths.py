@@ -16,7 +16,7 @@ def main():
 		if (inFilename.endswith(".gz")) or (inFilename.endswith(".gzip")):
 			inFile = gzip_open(inFilename,"rt")
 		else:
-			inFile = file(inFilename,"rt")
+			inFile = open(inFilename,"rt")
 
 	for (name,sequence) in fasta_sequences(inFile):
 		print("%s\t%d" % (name,len(sequence)))
