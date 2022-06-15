@@ -75,7 +75,7 @@ else
 	      readsname=`echo $readsname | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fastq.gz$//g'`
 	      gzip -dc halfdeep/$refbase/mapped_reads/$readsname.depth.dat.gz
 		  done \
-	  | awk 'BEGIN { print "# reading ",readsname; } \
+	  | awk 'BEGIN { print "# reading",readsname; } \
 	               { print $1,$2,$2,$3; }' readsname=${readsname} \
 	  | genodsp --report:comments --origin=one --uncovered:hide --precision=3 \
 		  --chromosomes=halfdeep/$refbase/scaffold_lengths.dat \
