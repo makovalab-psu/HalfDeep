@@ -73,10 +73,11 @@ else
 	  | while read readsname ; do
 	      readsname=`basename $readsname`
 	      readsname=`echo $readsname | sed 's/.fasta.$//g' | sed 's/.fa$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fastq.gz$//g'`
+	      echo "# reading $readsname.depth.dat.gz" \
 	      gzip -dc halfdeep/$refbase/mapped_reads/$readsname.depth.dat.gz
 		  done \
 	  | awk '{ print $1,$2,$2,$3 }' \
-	  | genodsp --origin=one --uncovered:hide --precision=3 \
+	  | genodsp --report:comments --origin=one --uncovered:hide --precision=3 \
 		  --chromosomes=halfdeep/$refbase/scaffold_lengths.dat \
 		  = sum --window=$shortWindowSize --denom=actual \
 	  | gzip \

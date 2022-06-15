@@ -6,7 +6,7 @@ minimap2
 
 samtools
 
-genodsp (https://github.com/rsharris/genodsp)
+genodsp, version 0.0.6 or newer (https://github.com/rsharris/genodsp)
 
 Those must all be installed and in your `$PATH`.
 
