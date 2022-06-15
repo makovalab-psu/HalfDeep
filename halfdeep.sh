@@ -79,7 +79,7 @@ else
       | awk '/^#/ { print $0; }
             !/^#/ { print $1,$2,$2,$3 }' \
 	  | genodsp --origin=one --uncovered:hide --precision=3 \
-	      --report=comments --progress=input:500K \
+	      --report=comments --progress=input:500M \
 		  --chromosomes=halfdeep/$refbase/scaffold_lengths.dat \
 		  = sum --window=$shortWindowSize --denom=actual \
 	  | gzip \
