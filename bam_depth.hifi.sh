@@ -106,6 +106,6 @@ if [ ! -e $out.depth.dat.gz ]; then
 	exit -1
 fi
 
-#rm $out.bam
-#rm $out.sort.bam
-#rm $out.sort.bam.bai
+rm $out.bam
+rm $out.sort.bam
+rm $out.sort.bam.bai
