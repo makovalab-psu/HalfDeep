@@ -55,7 +55,6 @@ fi
 # create a list of all the symlinks (which may not yet exist); and the first of
 # these will be used by FastK as the name of its results
 
-……… can't do two `s here
 fastqFiles=`cat input.fofn \
   | while read f ; do
       fBase=$(basename ${f})
