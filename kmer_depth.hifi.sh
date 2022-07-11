@@ -22,7 +22,7 @@ minAbundance=3  # allow user to set this?
 
 
 refFull=$1
-subsampleSpec=echo $2
+subsampleSpec=$2
 
 if [ ! -e ${refFull} ]; then
 	echo "reference ${refFull} does not exist. Exit."
