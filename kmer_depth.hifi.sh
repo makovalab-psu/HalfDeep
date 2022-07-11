@@ -56,6 +56,10 @@ if [ ! -d halfdeep/${refBase} ]; then
 	mkdir halfdeep/${refBase}
 fi
 
+if [ ! -d halfdeep/${refBase}/kmer_profiles ]; then
+	mkdir halfdeep/${refBase}/kmer_profiles
+fi
+
 
 # extract the <sampleNum>th subset of the fastq files
 
@@ -83,7 +87,7 @@ out=`echo ${out} | sed 's/.fastq$//g' | sed 's/.fastq.gz$//g'`
 
 # make sure the final product has not already been computed
 
-finalProduct=halfdeep/${refBase}/kmer_profile.depth.dat.gz
+finalProduct=halfdeep/${refBase}/kmer_profiles/${out}.depth.dat.gz
 
 if [ -e ${finalProduct} ]; then
 	echo "${finalProduct} found. Exit."

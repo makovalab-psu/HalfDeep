@@ -1,10 +1,14 @@
 #!/bin/bash
 
 if [ -z $1 ]; then
-	echo "Usage: ./halfdeep.kmers <ref>"
-	echo "    Assumes we have <ref>.lengths in the current directory"
+	echo "Usage: ./halfdeep.kmers <ref> <numSamples>"
+	echo "    Assumes we have <ref>.lengths and input.fofn in the current"
+	echo "    directory"
 	exit -1
 fi
+
+echo WORK IN PROGRESS
+……… yank that
 
 shortWindowSize=1K           # allow user to set this?
 longWindowSize=100K          # allow user to set this?
@@ -12,6 +16,9 @@ detectionThreshold=0.10      # allow user to set this?
 gapFill=500K                 # allow user to set this?
 
 refIn=$1
+numSamples=$2
+
+
 ref=`echo ${refIn} | sed 's/.fasta$//g' | sed 's/.fa$//g' | sed 's/.fsa_nt$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fsa_nt.gz$//g'`
 refBase=`basename ${ref}`
 
@@ -44,6 +51,20 @@ if [ ! -e halfdeep/${refBase}/scaffold_lengths.dat ]; then
 	echo "Something went wrong with scaffold_lengths. halfdeep/${refBase}/scaffold_lengths.dat does not exist. Exit."
 	exit -1
 fi
+
+……… this needs to loop
+………
+
+    sampleNum=0
+    time while [ ${sampleNum} -lt ${numSamples} ]; do
+        sampleNum=$((sampleNum+1))
+        subsampleFofn=input.${sampleNum}_of_${numSamples}.fofn
+………
+        outName=`head -n 1 ${subsampleFofn}`
+        outName=`echo ${outName} | sed 's/.fastq$//g' | sed 's/.fastq.gz$//g'`
+………
+        done
+
 
 if [ -e halfdeep/${refBase}/depth.dat.gz ]; then
 	echo "halfdeep/${refBase}/depth.dat.gz found. Skip depth-windowing step."
