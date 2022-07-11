@@ -1,16 +1,29 @@
 #!/bin/bash
 
 if [ -z $1 ]; then
-	echo "Usage: ./kmer_depth.hifi.sh <ref>"
+	echo "Usage: ./kmer_depth.hifi.sh <ref> <sampleNum>/<numSamples>"
 	echo "    Assumes we have <ref> and input.fofn in the current directory,"
 	echo "    and that <ref> has an associated file listing its contig names,"
 	echo "    in order"
+	echo "    input.fofn will be partitioned into <numSamples> different"
+	echo "    subsets, and processing will be performed on the <sampleNum>th"
+	echo "    subset"
 	exit -1
 fi
 
-# FastK and map_names are prerequisites
+# FastK, subsample, and map_names are prerequisites
+
+
+#cpus=3  # allow user to set this?
+#cpus=$SLURM_CPUS_PER_TASK
+
+kmerSize=40     # allow user to set this?
+minAbundance=3  # allow user to set this?
+
 
 refFull=$1
+subsampleSpec=echo $2
+
 if [ ! -e ${refFull} ]; then
 	echo "reference ${refFull} does not exist. Exit."
 	exit -1
@@ -18,12 +31,6 @@ fi
 
 ref=`echo ${refFull} | sed 's/.fasta$//g' | sed 's/.fa$//g' | sed 's/.fsa_nt$//g' | sed 's/.fasta.gz$//g' | sed 's/.fa.gz$//g' | sed 's/.fsa_nt.gz$//g'`
 refBase=`basename ${ref}`
-
-#cpus=3  # allow user to set this?
-#cpus=$SLURM_CPUS_PER_TASK
-
-kmerSize=40     # allow user to set this?
-minAbundance=3  # allow user to set this?
 
 if [ ! -e input.fofn ]; then
 	echo "input.fofn does not exist. Exit."
@@ -49,13 +56,24 @@ if [ ! -d halfdeep/${refBase} ]; then
 	mkdir halfdeep/${refBase}
 fi
 
+
+# extract the <sampleNum>th subset of the fastq files
+
+sampleNum=` echo ${subsampleSpec} | tr "/" " " | awk '{ print $1 }'`
+numSamples=`echo ${subsampleSpec} | tr "/" " " | awk '{ print $2 }'`
+subsampleFofn=input.${sampleNum}_of_${numSamples}.fofn
+
+echo "\
+cat input.fofn | subsample ${subsampleSpec} > ${subsampleFofn}"
+cat input.fofn | subsample ${subsampleSpec} > ${subsampleFofn}
+
 # the intended directory for the k-mers table is ${outDir}; we will be creating
 # symlinks in that directory to the actual fastqs, because we don't want FastK
 # to litter our actual fastq directory with all its invisible files; here, we
 # create a list of all the symlinks (which may not yet exist); and the first of
 # these will be used by FastK as the name of its results
 
-fastqFiles=`cat input.fofn \
+fastqFiles=`cat ${subsampleFofn} \
   | while read f ; do
       fBase=$(basename ${f})
       echo ${outDir}/${fBase}
@@ -80,7 +98,7 @@ else
 	echo "Using FastK to build k-mers table"
 
     # create the symlinks mentioned above
-	cat input.fofn \
+	cat ${subsampleFofn} \
 	  | while read f ; do
 	      fBase=`basename ${f}`
 	      ln -s ../../${f} ${outDir}/${fBase}
